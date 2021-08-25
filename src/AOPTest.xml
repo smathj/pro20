@@ -2,12 +2,23 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
+
+   <!-- 타깃 클래스 빈 지정 -->
    <bean id="calcTarget" class="com.spring.ex01.Calculator" />
+   <!-- 로그 기능을 하는 어드바이스 빈지정 -->
    <bean id="logAdvice" class="com.spring.ex01.LoggingAdvice" />
    
+   
+   <!-- 타깃과 어드바이스 엮어준다 -->
    <bean id="proxyCal"
-          class="org.springframework.aop.framework.ProxyFactoryBean">
+         class="org.springframework.aop.framework.ProxyFactoryBean">
+      <!-- 타깃 빈 지정 -->
       <property name="target" ref="calcTarget"/>
+      <!-- 타깃에 어드바이스 지정 -->
+      <!-- 
+      	   interceptorNames 속성에 logAdvice를 어드바이스 빈으로 지정하여 
+      	   타킷 클래스의 메서드 호출시 logAdvice 실행하도록 함
+      -->
       <property name="interceptorNames">
          <list>
             <value>logAdvice</value>
